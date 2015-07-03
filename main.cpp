@@ -1,6 +1,4 @@
 #include <QDebug>
-#include <QElapsedTimer>
-#include <QThread>
 
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -37,11 +35,9 @@ GLuint m_program;
 GLint m_attributeVertex;
 GLint m_uniformValue;
 
-QElapsedTimer g_videoTimer;
-
 QString glErrorString()
 {
-    return "";
+    return QString("%1").arg(glGetError(), 0, 16);
 }
 
 QString eglErrorString()
@@ -224,7 +220,7 @@ void init()
     rc = eglMakeCurrent(m_display, m_surface, m_surface, m_context);
     EGL_ASSERT_X(rc);
 
-    rc = eglSwapInterval(m_display, 0);
+    rc = eglSwapInterval(m_display, 1);
     EGL_ASSERT_X(rc);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
